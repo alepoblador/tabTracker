@@ -24,7 +24,8 @@ chrome.runtime.onInstalled.addListener( function() {
  * Register listener for when active tab changes
  * Update timesLastActive to keep sorted by (most recently active) --> (least recently active)
  */
-chrome.tabs.onActiveChanged.addListener( function(tabId, selectInfo) {
+chrome.tabs.onActivated.addListener( function(activeInfo) {
+	var tabId = activeInfo.tabId;
 	chrome.storage.sync.get('times', function(items) {
 		var timesLastActive = items.times;
 
@@ -84,13 +85,24 @@ chrome.tabs.onUpdated.addListener( function(tabId, changeInfo, tab) {
 	chrome.storage.sync.get('times', function(items) {
 		var timesLastActive = items.times;
 
+		var tabExists = false;
 		for (var i = 0; i < timesLastActive.length; i++) {
 			if (timesLastActive[i][0].id ===  tabId) {
+				tabExists = true;
 				timesLastActive[i][0] = tab;
 				break;
 			}
 		}
-		chrome.storage.sync.set({'times': timesLastActive});
+		if (!tabExists) {
+			chrome.tabs.get(tabId, function(tab) {
+				timesLastActive.push([tab, 0]);
+			} );
+			setTimeout(function() {
+				chrome.storage.sync.set({'times': timesLastActive})
+			}, 1000)
+		} else {
+			chrome.storage.sync.set({'times': timesLastActive});
+		}
 	});
 });
 
