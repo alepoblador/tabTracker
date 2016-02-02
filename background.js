@@ -49,6 +49,7 @@ chrome.tabs.onActivated.addListener( function(activeInfo) {
 			timesLastActive[0][1] = d.getTime();
 			chrome.storage.sync.set({'times': timesLastActive});
 		} else {
+			alert("on activated listener tabID "+tabID);
 			chrome.tabs.get(tabId, function(tab) {
 				timesLastActive.unshift([tab, d.getTime()]);
 				chrome.storage.sync.set({'times': timesLastActive});
@@ -68,14 +69,17 @@ chrome.tabs.onRemoved.addListener( function(tabId, removeInfo) {
 
 		for (var i = 0; i < timesLastActive.length; i++ ) {
 			if (timesLastActive[i][0].id === tabId) {
+				alert("removing tab #"+tabId+" at index "+i);
 				timesLastActive.splice(i, 1);
 				break;
 			}
 		}
 
-		setTimeout(function() {
-			chrome.storage.sync.set({'times': timesLastActive})
-		}, 1000)
+		chrome.storage.sync.set({'times': timesLastActive}, function() {
+			if (!chrome.runtime.lastError) {
+				alert("removed successfully");
+			}
+		});
 	});
 });
 
@@ -84,6 +88,7 @@ chrome.tabs.onRemoved.addListener( function(tabId, removeInfo) {
  * Monitor changes in: tab title, tab faviconUrl
  */
 chrome.tabs.onUpdated.addListener( function(tabId, changeInfo, tab) {
+	alert("on updated listener tabID "+tabId);
 	chrome.storage.sync.get('times', function(items) {
 		var timesLastActive = items.times;
 
