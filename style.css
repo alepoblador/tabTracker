@@ -1,0 +1,68 @@
+body {
+	font-family: Arial;
+	font-size: 90%;
+}
+
+#table {
+	width: 450px;
+	padding: 0px;
+}
+
+ul {
+	padding: 0px;
+}
+
+ul li {
+	margin: 0px;
+}
+
+p {
+	margin: 0px;
+	padding: 0px;
+}
+
+.row {
+	margin: 0px;
+	padding: 0px;
+	border-bottom: 1px solid #eee;
+}
+
+.row div {
+	display: inline-block;
+	margin: 0px;
+	padding: 5px;
+	max-height: 26px;
+	vertical-align: middle;
+}
+
+.title-icon-col {
+	margin-left: 0px;
+}
+
+.icon-col img {
+	margin: 0px;
+	padding: 0px;
+	height: 16px;
+	width: 16px;
+}
+
+.close-icon-col {
+	background-image: url(close.gif);
+	background-size: 16px 16px;
+	height: 16px;
+	width: 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: pointer;
+}
+
+.name-col {
+	width: 285px;
+	white-space: pre;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.time-since-last-active-col {
+	width: 80px;
+}

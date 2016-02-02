@@ -1,0 +1,23 @@
+{
+	"manifest_version": 2,
+	"name": "Tab Tracker",
+	"version": "1.0",
+	"description": "Keeps a running list of your open tabs, and time since their creation and last visit",
+
+	"browser_action": {
+		"default_icon": "icon.png",
+		"default_title": "Tab Tracker",
+		"default_popup": "table.html"
+	},
+
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": false
+	},
+
+	"permissions": [
+		"tabs",
+		"storage"	
+	]
+
+}
