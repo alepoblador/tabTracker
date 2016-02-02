@@ -73,7 +73,9 @@ chrome.tabs.onRemoved.addListener( function(tabId, removeInfo) {
 			}
 		}
 
-		chrome.storage.sync.set({'times': timesLastActive});
+		setTimeout(function() {
+			chrome.storage.sync.set({'times': timesLastActive})
+		}, 1000)
 	});
 });
 
